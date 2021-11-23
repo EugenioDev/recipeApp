@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Recipes App</title>
+  </head>
+  <body>
+    <div class="recipe-container">
+      <header class="recipe-header">
+        <img class="logoMenu" src="./images/001-menu.png" alt="menu logo" />
+        <h4>allRecipes</h4>
+        <div class="input-control">
+          <form id="form" type="submit">
+            <input type="text" placeholder="Search your meals" class="input" />
+          </form>
+          <img class="searchIcon" src="./images/002-search.png" alt="" />
+        </div>
+        <nav class="navbar"></nav>
+      </header>
+      <!-- Category Section -->
+      <div class="categories-recipe"></div>
+      <!-- Body Recipes -->
+      <div class="recipe-body">
+        <div class="banner-pub">
+          <h4>Personalize <br /><span>your recommandations</span></h4>
+          <button class="btn">Start Personalizzing</button>
+        </div>
+        <!-- Random Recipe  -->
+        <div class="random-recipe"></div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

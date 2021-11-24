@@ -29,6 +29,30 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
           const singleEl = document.querySelector(".categories-recipe");
           singleEl.appendChild(singleElCategory);
+
+          singleElCategory.addEventListener("click", () => {
+            fetch(
+              `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryEl.strCategory}`
+            )
+              .then((data) => data.json())
+              .then((data) => {
+                randomMeals.innerHTML = "";
+                data.meals.forEach((mealCategory) => {
+                  const catMeal = document.createElement("div");
+                  catMeal.classList.add("areaMeal");
+                  catMeal.innerHTML = `
+                 <div class="random-meal">
+                  <img
+                    src=${mealCategory.strMealThumb}
+                    alt=""
+                  />
+                  <h3>${mealCategory.strMeal}</h3>
+                </div>
+                 `;
+                  randomMeals.appendChild(catMeal);
+                });
+              });
+          });
         });
       });
   }
@@ -37,12 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Get randon Meal - data.meals
   const randomMeals = document.querySelector(".random-recipe");
 
-  console.log(randomMeals)
   function getRandomMeal(getRandom) {
     fetch(getRandom)
       .then((data) => data.json())
       .then((data) => {
-        // console.log(data);
         const singleRandom = document.createElement("div");
         singleRandom.innerHTML = `
         <div class="random-meal">
@@ -60,25 +82,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // get Menu From Area
   function getAreaByMenu(menuArea) {
-    // console.log(menuItems) 6
     fetch(menuArea)
       .then((data) => data.json())
       .then((data) => {
         data.meals.forEach((mealArea) => {
           // mealArea.strArea
           const elMenu = document.createElement("p");
-          elMenu.innerHTML = `
-        <a href="">${mealArea.strArea}</a>
+          elMenu.classList.add("menuItems");
+          elMenu.innerHTML = `${mealArea.strArea}
         `;
           navBar.appendChild(elMenu);
+          elMenu.addEventListener("click", function () {
+            randomMeals.innerHTML = "";
+            navBar.classList.remove("isOpen");
+            fetch(
+              `https://www.themealdb.com/api/json/v1/1/filter.php?a=${elMenu.textContent}`
+            )
+              .then((data) => data.json())
+              .then((data) => {
+                data.meals.forEach((meal) => {
+                  const areaMeal = document.createElement("div");
+                  areaMeal.classList.add("areaMeal");
+                  areaMeal.innerHTML = `
+                 <div class="random-meal">
+                  <img
+                    src=${meal.strMealThumb}
+                    alt=""
+                  />
+                  <h3>${meal.strMeal}</h3>
+                </div>
+                 
+                 `;
+                  randomMeals.appendChild(areaMeal);
+                });
+              });
+          });
         });
       });
   }
   getAreaByMenu("https://www.themealdb.com/api/json/v1/1/list.php?a=list");
 
-
-
-  
   //  get meal form Searc by Name on submit
   const form = document.getElementById("form");
   form.addEventListener("submit", function (e) {
